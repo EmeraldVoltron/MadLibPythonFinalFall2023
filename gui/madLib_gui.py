@@ -1,45 +1,77 @@
 """
 Abigail Boggs
 amboggs@dmacc.edu
-Last Edited: 11/28/23
+Last Edited: 11/30/23
 
 MadLib Final Project, gui
 """
 import tkinter
 import tkinter as tk
+from classes import madLib_Class as ml
 
 '''
 Define functions/methods below here
 '''
 
-madLib_number = 0
 
 def start_madlib():
     # activate all fields
+    verb_text_1["state"] = "normal"
+    verb_text_2["state"] = "normal"
+    verb_text_3["state"] = "normal"
+    adjective_text_1["state"] = "normal"
+    adjective_text_2["state"] = "normal"
+    adjective_text_3["state"] = "normal"
+    noun_text_1["state"] = "normal"
+    noun_text_2["state"] = "normal"
+    plural_noun_text_1["state"] = "normal"
     # activate create madlib button
-    pass
+    create_madlib_button["state"] = "normal"
+    # deactivate start game button
+    start_button["state"] = "disabled"
 
 
 def create_madlib():
-    # test all inputs before moving on
+    # TO-DO test all inputs before moving on
+    try:
+        pass
+    except:
+        pass
+    # TO-DO all words saved to words_dict
+    words_dict = {}
     # Create new madlib
-    # parameters: words_dict and madlib_number
+    madlib = ml.MadLib(words_dict)
     # active save madlib button
-    # activate start new madlib button
+    save_madlib_bttn["state"] = "normal"
+    start_button["state"] = "normal"
     # deactivate all entry fields
-    pass
+    create_madlib_button["state"] = "disabled"
+    verb_text_1["state"] = "disabled"
+    verb_text_2["state"] = "disabled"
+    verb_text_3["state"] = "disabled"
+    adjective_text_1["state"] = "disabled"
+    adjective_text_2["state"] = "disabled"
+    adjective_text_3["state"] = "disabled"
+    noun_text_1["state"] = "disabled"
+    noun_text_2["state"] = "disabled"
+    plural_noun_text_1 ["state"] = "disabled"
+    # reactivate start button
+    start_button["state"] = "normal"
+    # put the made madlib into the text field
+    madlib_text["state"] = "disabled"
+    complete_madlib = madlib.printMadLib()
+    madlib_text.insert(1.0, (str(complete_madlib)))
+    madlib_text["state"] = "normal"
 
 
 def save_madlib():
-    #File out
-    pass
+    try:
+        f = open("myMadlib.txt", "a")
+        f.write(madlib_text.get(1.0, "end-1c"))
+    except IOError:
+        print("File error")
+    # get text field, export out to a fil
 
-
-def start_new_madlib():
-    # activate and clear all fields
-    # deactive start over and save madlib buttons
-    # clear results text field
-    pass
 
 '''
 Define functions/methods above here
@@ -84,35 +116,35 @@ verb_text_3.grid(row=6, column=2)
 
 adjective_label_1 = tk.Label(text="Adjective 1: ", bg='#ccffff')
 adjective_label_1.grid(row=7, column=1)
-adjective_label_1 = tk.Text(m, height=1, width=40, state="disabled")
-adjective_label_1.grid(row=7, column=2)
+adjective_text_1 = tk.Text(m, height=1, width=40, state="disabled")
+adjective_text_1.grid(row=7, column=2)
 
 adjective_label_2 = tk.Label(text="Adjective 2: ", bg='#ccffff')
 adjective_label_2.grid(row=8, column=1)
-adjective_label_2 = tk.Text(m, height=1, width=40, state="disabled")
-adjective_label_2.grid(row=8, column=2)
+adjective_text_2 = tk.Text(m, height=1, width=40, state="disabled")
+adjective_text_2.grid(row=8, column=2)
 
 adjective_label_3 = tk.Label(text="Adjective 3: ", bg='#ccffff')
 adjective_label_3.grid(row=9, column=1)
-adjective_label_3 = tk.Text(m, height=1, width=40, state="disabled")
-adjective_label_3.grid(row=9, column=2)
+adjective_text_3 = tk.Text(m, height=1, width=40, state="disabled")
+adjective_text_3.grid(row=9, column=2)
 
 noun_label_1 = tk.Label(text="Noun 1: ", bg='#ccffff')
 noun_label_1.grid(row=10, column=1)
-noun_label_1 = tk.Text(m, height=1, width=40, state="disabled")
-noun_label_1.grid(row=10, column=2)
+noun_text_1 = tk.Text(m, height=1, width=40, state="disabled")
+noun_text_1.grid(row=10, column=2)
 
 noun_label_2 = tk.Label(text="Noun 2: ", bg='#ccffff')
 noun_label_2.grid(row=11, column=1)
-noun_label_2 = tk.Text(m, height=1, width=40, state="disabled")
-noun_label_2.grid(row=11, column=2)
+noun_text_2 = tk.Text(m, height=1, width=40, state="disabled")
+noun_text_2.grid(row=11, column=2)
 
 plural_noun_label_1 = tk.Label(text="Plural Noun: ", bg='#ccffff')
 plural_noun_label_1.grid(row=12, column=1)
-plural_noun_label_1 = tk.Text(m, height=1, width=40, state="disabled")
-plural_noun_label_1.grid(row=12, column=2)
+plural_noun_text_1 = tk.Text(m, height=1, width=40, state="disabled")
+plural_noun_text_1.grid(row=12, column=2)
 
-create_madlib_button = tk.Button(m, text="Create MadLib", width=12, command=create_madlib)
+create_madlib_button = tk.Button(m, text="Create MadLib", width=12, command=create_madlib, state="disabled")
 create_madlib_button.grid(row=13, column=2)
 
 madLib_label = tk.Label(text="Your MadLib:", bg='#ccffff')
@@ -126,10 +158,8 @@ save_madlib_label.grid(row=16, column=2)
 save_madlib_bttn = tk.Button(m, text="Save Madlib", width=12, command=save_madlib, state="disabled")
 save_madlib_bttn.grid(row=17, column=2)
 
-start_over_label = tk.Label(text="Start a new MadLib!", bg='#ccffff')
+start_over_label = tk.Label(text="Start a new MadLib by Pressing Start Game!", bg='#ccffff')
 start_over_label.grid(row=18, column=2)
-start_over_bttn = tk.Button(m, text="Start Over", width=12, command=start_new_madlib, state="disabled")
-start_over_bttn.grid(row=19, column=2)
 '''
 Insert module code above here
 '''
