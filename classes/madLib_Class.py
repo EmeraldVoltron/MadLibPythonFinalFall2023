@@ -10,32 +10,34 @@ import random
 
 
 class MadLib:
-    # list of different madlib options:
-    madlib1 = ""
-    madlib2 = ""
-    madlib3 = ""
-    madlib4 = ""
-    madlib5 = ""
-    # madlib list
-    madlibs_list = [madlib1, madlib2, madlib3, madlib4, madlib5]
-
-    # madlib randomGenerator(chooses random mad lib from the 5 above
-    currentMadLib = madlibs_list[random.randint(0, 4)]
-
 
     def __init__(self, words):
         self.words = words
 
+    def gen_and_print_madlib(self):
+        # list of different madlib options:
+        madlib1 = []
+        madlib2 = []
+        madlib3 = []
+        madlib4 = []
+        madlib5 = []
+        # madlib list
+        madlibs_list = [madlib1, madlib2, madlib3, madlib4, madlib5]
+        # madlib randomGenerator(chooses random mad lib from the 5 above
+
+        currentMadLib = madlibs_list[random.randint(0, 4)]
+
+        # generates madlib
         # inner function
-        def generateMadLib(words):
-            pass
+        def gen_madlib():
+            # generate madlib
+            c_madlib = "Testing"
+            return c_madlib
 
-        generateMadLib(self.words)
-
-    def printMadLib(self):
+        #generate madlib
+        created_madlib = gen_madlib()
         # returns a string of completed madlib
-        pass
-
+        return created_madlib
 
 
 
