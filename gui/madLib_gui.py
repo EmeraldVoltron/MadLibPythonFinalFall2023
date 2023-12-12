@@ -1,12 +1,14 @@
 """
 Abigail Boggs
 amboggs@dmacc.edu
-Last Edited: 11/30/23
+Last Edited: 12/7/23
 
 MadLib Final Project, gui
 """
 import csv
+import datetime
 import tkinter
+from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
 from classes import madLib_Class as ml
@@ -110,7 +112,9 @@ def test_words(words_dict):
 
     # print(verb_rows)
     # print(verb_ing_rows)
-    # TO-DO test all inputs before moving on
+    # print(noun_rows)
+    # print(plural_noun_rows)
+    # test all inputs before moving on
     try:
         verb1_test = False
         verb2_test = False
@@ -235,7 +239,7 @@ def test_words(words_dict):
         # print(name_test)
         if (verb1_test is False or verb2_test is False or verb_ing_test is False or p_noun_test is False or noun1_test
                 is False or noun2_test is False or adjective1_test is False
-                or adjective2_test is False or adjective3_test is False):
+                or adjective2_test is False or adjective3_test is False or name_test is False):
             words_pass_tf = False
 
             messagebox.showerror("Error!", "One or more of your words entered are not valid, please try again.      "
@@ -262,17 +266,22 @@ def create_madlib():
     print("Successfully added words to dict")
     passed_words = test_words(filled_words_dict)
     print("Successfully tested words")
+
     if passed_words is True:
         # Create new madlib
-        madlib = ml.MadLib(passed_words)
+        madlib = ml.MadLib(filled_words_dict)
+
         # active save madlib button
         save_madlib_button["state"] = "normal"
         start_button["state"] = "normal"
+
         # deactivate all entry fields
         create_madlib_button["state"] = "disabled"
         disable_text_fields()
+
         # reactivate start button
         start_button["state"] = "normal"
+
         # put the made madlib into the text field
         madlib_text["state"] = "normal"
         complete_madlib = madlib.gen_and_print_madlib()
@@ -288,10 +297,13 @@ def save_madlib():
     Save madlib to external file
     :return:
     """
+    # get date time for export
+    time = datetime.datetime.now()
     # get text field, export out to a file
     try:
         f = open("myMadlib.txt", "a")
-        f.write(madlib_text.get(1.0, "end-1c") + "\n \n")
+        f.write(" Date: " + str(time) + "\n" +
+                madlib_text.get(1.0, "end-1c") + "\n \n")
         f.close()
     except IOError:
         print("File error")
@@ -360,6 +372,7 @@ m = tkinter.Tk()
 m.title('MadLib Game')
 m.geometry("500x800")
 m.config(bg='#ccffff')
+Font_tuple = ("Arial", 9)
 
 '''
 Insert Module Code Below Here
@@ -381,51 +394,61 @@ verb_label_1 = tk.Label(text="Verb 1: ", bg='#ccffff')
 verb_label_1.grid(row=4, column=1)
 verb_text_1 = tk.Text(m, height=1, width=40, state="disabled")
 verb_text_1.grid(row=4, column=2)
+verb_text_1.configure(font=Font_tuple)
 
 verb_label_2 = tk.Label(text="Verb 2: ", bg='#ccffff')
 verb_label_2.grid(row=5, column=1)
 verb_text_2 = tk.Text(m, height=1, width=40, state="disabled")
 verb_text_2.grid(row=5, column=2)
+verb_text_2.configure(font=Font_tuple)
 
 verb_label_3 = tk.Label(text="Verb Ending in -ing: ", bg='#ccffff')
 verb_label_3.grid(row=6, column=1)
 verb_text_3 = tk.Text(m, height=1, width=40, state="disabled")
 verb_text_3.grid(row=6, column=2)
+verb_text_3.configure(font=Font_tuple)
 
 adjective_label_1 = tk.Label(text="Adjective 1: ", bg='#ccffff')
 adjective_label_1.grid(row=7, column=1)
 adjective_text_1 = tk.Text(m, height=1, width=40, state="disabled")
 adjective_text_1.grid(row=7, column=2)
+adjective_text_1.configure(font=Font_tuple)
 
 adjective_label_2 = tk.Label(text="Adjective 2: ", bg='#ccffff')
 adjective_label_2.grid(row=8, column=1)
 adjective_text_2 = tk.Text(m, height=1, width=40, state="disabled")
 adjective_text_2.grid(row=8, column=2)
+adjective_text_2.configure(font=Font_tuple)
 
 adjective_label_3 = tk.Label(text="Adjective 3: ", bg='#ccffff')
 adjective_label_3.grid(row=9, column=1)
 adjective_text_3 = tk.Text(m, height=1, width=40, state="disabled")
 adjective_text_3.grid(row=9, column=2)
+adjective_text_3.configure(font=Font_tuple)
 
 noun_label_1 = tk.Label(text="Noun 1: ", bg='#ccffff')
 noun_label_1.grid(row=10, column=1)
 noun_text_1 = tk.Text(m, height=1, width=40, state="disabled")
 noun_text_1.grid(row=10, column=2)
+noun_text_1.configure(font=Font_tuple)
 
 noun_label_2 = tk.Label(text="Noun 2: ", bg='#ccffff')
 noun_label_2.grid(row=11, column=1)
 noun_text_2 = tk.Text(m, height=1, width=40, state="disabled")
 noun_text_2.grid(row=11, column=2)
+noun_text_2.configure(font=Font_tuple)
 
 plural_noun_label_1 = tk.Label(text="Plural Noun: ", bg='#ccffff')
 plural_noun_label_1.grid(row=12, column=1)
 plural_noun_text_1 = tk.Text(m, height=1, width=40, state="disabled")
 plural_noun_text_1.grid(row=12, column=2)
+plural_noun_text_1.configure(font=Font_tuple)
 
 name_label = tk.Label(text="Name: ", bg="#ccffff")
 name_label.grid(row=13, column=1)
 name_text = tk.Text(m, height=1, width=40, state="disabled")
 name_text.grid(row=13, column=2)
+name_text.configure(font=Font_tuple)
 
 create_madlib_button = tk.Button(m, text="Create MadLib", width=12, command=create_madlib, state="disabled")
 create_madlib_button.grid(row=14, column=2)
@@ -433,8 +456,11 @@ create_madlib_button.grid(row=14, column=2)
 madLib_label = tk.Label(text="Your MadLib:", bg='#ccffff')
 madLib_label.grid(row=15, column=2)
 
-madlib_text = tk.Text(m, height=20, width=40, state="disabled")
-madlib_text.grid(row=16, column=2)
+madlib_text = tk.Text(m, height=20, width=50, state="disabled", wrap=WORD)
+madlib_text.grid(row=16, column=2, sticky=tkinter.EW)
+madlib_text.configure(font=Font_tuple)
+madlib_scroller = tkinter.Scrollbar(orient='vertical', command=madlib_text.yview)
+madlib_scroller.grid(row=16, column=3, sticky=tkinter.NS)
 
 save_madlib_label = tk.Label(text="Save your MadLib to a file!", bg='#ccffff')
 save_madlib_label.grid(row=17, column=2)
